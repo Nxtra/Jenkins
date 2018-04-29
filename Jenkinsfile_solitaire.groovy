@@ -2,7 +2,7 @@
 node {
 
     stage('checkout'){
-        def gitUrl = 'https://github.com/g0t4/solitaire-systemjs-course'
+        def gitUrl = 'https://github.com/Nxtra/solitaire-systemjs-course.git'
         echo "checking out : ${gitUrl}"
         git branch: 'jenkins2-course',
         url: gitUrl
