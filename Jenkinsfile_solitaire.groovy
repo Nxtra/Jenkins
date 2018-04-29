@@ -39,7 +39,7 @@ node {
     }
 }
 
-node{
+node('mac'){
     sh 'ls'
     sh 'rm -rf *'
     unstash 'everything'
