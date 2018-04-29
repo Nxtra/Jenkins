@@ -57,6 +57,12 @@ stage ('Browser Testing'){
     }
 }
 
+node {
+    notify("Deploy to staging?")
+}
+
+input 'Deploy to staging?'
+
 
 def runTests(browser) {
     node {
