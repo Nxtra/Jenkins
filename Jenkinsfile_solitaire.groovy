@@ -57,9 +57,9 @@ stage ('Browser Testing'){
     }
 }
 
-node {
-    notify("Deploy to staging?")
-}
+//node {
+//    notify("Deploy to staging?")
+//}
 
 input 'Deploy to staging?'
 
@@ -82,7 +82,7 @@ def runTests(browser) {
 
 def notify(status){
     emailext (
-      to: "wesmdemos@gmail.com",
+      to: "nick*****@gmail.com",
       subject: "${status}: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]'",
       body: """<p>${status}: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]':</p>
         <p>Check console output at <a href='${env.BUILD_URL}'>${env.JOB_NAME} [${env.BUILD_NUMBER}]</a></p>""",
