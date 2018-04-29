@@ -22,7 +22,7 @@ node {
               includes: '**'
     }
 
-    stage('test'){
+    stage('Phantom test'){
         // test with PhantomJS for "fast" "generic" results
         // on windows use: bat 'npm run test-single-run -- --browsers PhantomJS'
         sh 'npm run test-single-run -- --browsers PhantomJS'
@@ -44,6 +44,34 @@ node('mac'){
     sh 'rm -rf *'
     unstash 'everything'
     sh 'ls'
+}
+
+//parallel integration testing
+stage ('Browser Testing'){
+    parallel chrome: {
+        runTests("Chrome")
+    }, firefox: {
+        runTests("Firefox")
+    }, safari: {
+        runTests("Safari")
+    }
+}
+
+
+def runTests(browser) {
+    node {
+        // on windows use: bat 'del /S /Q *'
+        sh 'rm -rf *'
+
+        unstash 'everything'
+
+        // on windows use: bat "npm run test-single-run -- --browsers ${browser}"
+        // inject browser parameter
+        sh "npm run test-single-run -- --browsers ${browser}"
+
+        step([$class: 'JUnitResultArchiver',
+              testResults: 'test-results/**/test-results.xml'])
+    }
 }
 
 def notify(status){
