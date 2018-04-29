@@ -57,7 +57,7 @@ stage ('Browser Testing'){
     }
 }
 
-stage(name: 'Deploy to staging', concurrency: 1){
+stage(name: 'Deploy to staging'){
 
 //    node {
 //        notify("Deploy to staging?")
