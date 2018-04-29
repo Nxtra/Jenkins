@@ -39,13 +39,6 @@ node {
     }
 }
 
-node('mac'){
-    sh 'ls'
-    sh 'rm -rf *'
-    unstash 'everything'
-    sh 'ls'
-}
-
 //parallel integration testing
 stage ('Browser Testing'){
     parallel chrome: {
@@ -74,7 +67,7 @@ stage(name: 'Deploy to staging'){
         // on windows use: bat 'docker-compose up -d --build'
         sh 'docker-compose up -d --build'
 
-        notify 'Solitaire Deployed!'
+//        notify 'Solitaire Deployed!'
     }
 }
 
