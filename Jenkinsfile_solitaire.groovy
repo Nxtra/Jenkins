@@ -3,13 +3,13 @@ node {
 
     stage('checkout'){
         def gitUrl = 'https://github.com/g0t4/solitaire-systemjs-course'
-    echo "checking out : ${gitUrl}"
-    git branch: 'jenkins2-course',
+        echo "checking out : ${gitUrl}"
+        git branch: 'jenkins2-course',
         url: gitUrl
     }
 
 
-    stage('node'){
+    stage('build'){
         // pull dependencies from npm
         // on windows use: bat 'npm install'
         sh 'npm install'
