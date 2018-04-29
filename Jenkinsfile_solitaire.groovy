@@ -39,6 +39,13 @@ node {
     }
 }
 
+node{
+    sh 'ls'
+    sh 'rm -rf *'
+    unstash 'everything'
+    sh 'ls'
+}
+
 def notify(status){
     emailext (
       to: "wesmdemos@gmail.com",
