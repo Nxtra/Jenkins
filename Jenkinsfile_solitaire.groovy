@@ -1,4 +1,4 @@
-
+//windows? change sh by bat
 node {
 
     stage('checkout'){
@@ -11,7 +11,6 @@ node {
 
     stage('build'){
         // pull dependencies from npm
-        // on windows use: bat 'npm install'
         sh 'npm install'
 
         // stash code & dependencies to expedite subsequent testing
@@ -24,7 +23,6 @@ node {
 
     stage('Phantom test'){
         // test with PhantomJS for "fast" "generic" results
-        // on windows use: bat 'npm run test-single-run -- --browsers PhantomJS'
         sh 'npm run test-single-run -- --browsers PhantomJS'
     }
 
@@ -40,6 +38,7 @@ node {
 }
 
 //parallel integration testing
+//add dependency if you add browser
 stage ('Browser Testing'){
     parallel chrome: {
         runTests("Chrome")
@@ -54,19 +53,13 @@ stage ('Browser Testing'){
 
 stage(name: 'Deploy to staging'){
 
-//    node {
-//        notify("Deploy to staging?")
-//    }
-
     input 'Deploy to staging?'
 
     node {
         // write build number to index page so we can see this update
-        // on windows use: bat "echo '<h1>${env.BUILD_DISPLAY_NAME}</h1>' >> app/index.html"
-        sh "echo buildnumber: '<h1>${env.BUILD_DISPLAY_NAME}</h1>' >> app/index.html"
+        sh "echo '${env.BUILD_DISPLAY_NAME} >> app/index.html"
 
         // deploy to a docker container mapped to port 3000
-        // on windows use: bat 'docker-compose up -d --build'
         sh 'docker-compose up -d --build'
 
 //        notify 'Application Deployed!'
@@ -79,9 +72,10 @@ def runTests(browser) {
         // on windows use: bat 'del /S /Q *'
         sh 'rm -rf *'
 
+        //we might get a different workspace cause we work with multiple agents
+        //so we need to unstach everything that we stached from our previous workspace to be sure we have all data
         unstash 'everything'
 
-        // on windows use: bat "npm run test-single-run -- --browsers ${browser}"
         // inject browser parameter
         sh "npm run test-single-run -- --browsers ${browser}"
 
