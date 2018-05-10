@@ -57,7 +57,7 @@ stage(name: 'Deploy to staging'){
 
     node {
         // write build number to index page so we can see this update
-        sh "echo '${env.BUILD_DISPLAY_NAME} >> app/index.html"
+        sh "echo '${env.BUILD_DISPLAY_NAME}' >> app/index.html"
 
         // deploy to a docker container mapped to port 3000
         sh 'docker-compose up -d --build'
