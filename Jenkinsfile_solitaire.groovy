@@ -33,13 +33,6 @@ node {
         //archive app code
         archiveArtifacts 'app/**/*.* '
 
-        publishHTML(target: [allowMissing: true,
-        alwaysLinkToLastBuild: false,
-        keepAll: true,
-        reportDir: 'target/site/jacoco/',
-        reportFiles: 'index.html',
-        reportName: 'Code Coverage'])
-
         // archive karma test results (karma is configured to export junit xml files)
         step([$class: 'JUnitResultArchiver',
         testResults: 'test-results/**/test-results.xml'])
