@@ -33,6 +33,13 @@ node {
         //archive app code
         archiveArtifacts 'app/**/*.* '
 
+        publishHTML(target: [allowMissing: true,
+        alwaysLinkToLastBuild: false,
+        keepAll: true,
+        reportDir: 'target/site/jacoco/',
+        reportFiles: 'index.html',
+        reportName: 'Code Coverage'])
+
         // archive karma test results (karma is configured to export junit xml files)
         step([$class: 'JUnitResultArchiver',
         testResults: 'test-results/**/test-results.xml'])
@@ -63,7 +70,7 @@ stage(name: 'Deploy to staging'){
     node {
         // write build number to index page so we can see this update
         // on windows use: bat "echo '<h1>${env.BUILD_DISPLAY_NAME}</h1>' >> app/index.html"
-        sh "echo '<h1>${env.BUILD_DISPLAY_NAME}</h1>' >> app/index.html"
+        sh "echo buildnumber: '<h1>${env.BUILD_DISPLAY_NAME}</h1>' >> app/index.html"
 
         // deploy to a docker container mapped to port 3000
         // on windows use: bat 'docker-compose up -d --build'
