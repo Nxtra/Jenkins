@@ -47,6 +47,8 @@ stage ('Browser Testing'){
         runTests("Firefox")
     }, safari: {
         runTests("Safari")
+    }, edge: {
+        runTests("Edge")
     }
 }
 
@@ -67,7 +69,7 @@ stage(name: 'Deploy to staging'){
         // on windows use: bat 'docker-compose up -d --build'
         sh 'docker-compose up -d --build'
 
-//        notify 'Solitaire Deployed!'
+//        notify 'Application Deployed!'
     }
 }
 
