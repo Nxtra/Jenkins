@@ -47,8 +47,8 @@ stage ('Browser Testing'){
         runTests("Firefox")
     }, safari: {
         runTests("Safari")
-    }, edge: {
-        runTests("Edge")
+    }, ie: {
+        runTests("Ie")
     }
 }
 
